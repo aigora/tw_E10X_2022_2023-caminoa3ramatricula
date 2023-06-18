@@ -1,11 +1,14 @@
-# [Título del trabajo]
+# CAMINO A TERCERA MATRÍCULA
 
-[Descripción breve del proyecto a realizar (2-3 frases).]
+Vamos a realizar un programa en C que trabaje sobre un fichero . csv y analice sus datos de distintas maneras.
 
 ## Integrantes del equipo
 
-[Nombres, apellidos, y usuario GitHub de los integrantes del equipo.]
+- David Marrón Gutiérrez, DavidMG10. Realizará la lectura del fichero y las gráficas de datos.
+- Claudia Garcia Borrego, claudiagarciab. Ordenará los datos en función de distintas opciones.
+- Hugo Garcia Redondo, hugoogr. Realizará un cuestionario modo kahoot.
+- Lucas Domínguez González, LucasDG0. Realizará la busqueda de datos sobre el fichero.
 
 ## Objetivos del trabajo
 
-[Lista de los objetivos que se persiguen con el trabajo propuesto.]
+REalizar un programa que ayude a la comprensión del fichero proporcionado facilitando su entendimineto.
