@@ -60,8 +60,6 @@ void readCsvFileToTechnologiesArray(Technology techs[ROWS_NUMBER]) {
   fclose(csvFile);
 }
 
-
-
 void calculateStatisticsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName) {
   FILE* outputFile = fopen(fileName, "w");
   if (outputFile == NULL) {
@@ -138,3 +136,86 @@ void calculateStatisticsAndPrintToFile(Technology techs[ROWS_NUMBER], char* file
   fclose(outputFile);
   printf("Estadisticas por tecnologia volcadas al archivo %s\n", fileName);
 }
+
+void graphicsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName) {
+  FILE* outputFile = fopen(fileName, "w");
+  if (outputFile == NULL) {
+    perror("Error abriendo fichero de salida\n");
+    exit(EXIT_FAILURE);
+  }
+
+  fprintf(outputFile, "Graficos por tecnologia y anio:\n\n");
+
+  int maxAsterisks = 45;
+
+  // buscamos el valor máximo para realizar los gráficos
+  double max2021 = 0;
+  // -1 para eliminar "Generacion Total"
+  for (int i = 0; i < ROWS_NUMBER - 1; i++) {
+    for (int j = 0; j < MONTHS_BY_YEAR; j++) {
+      if (techs[i].years[0].months[j].dataValue > max2021) {
+        max2021 = techs[i].years[0].months[j].dataValue;
+      }
+    }
+  }
+  double max2022 = 0;
+  for (int i = 0; i < ROWS_NUMBER; i++) {
+    for (int j = 0; j < MONTHS_BY_YEAR; j++) {
+      if (techs[i].years[1].months[j].dataValue > max2022) {
+        max2022 = techs[i].years[1].months[j].dataValue;
+      }
+    }
+  }
+
+  // diseñamos los graficas con el valor máximo
+  fprintf(outputFile, "\nAnio 2021\n\n");
+  for (int i = 0; i < ROWS_NUMBER; i++) {
+    fprintf(outputFile, "%s\n", techs[i].name);
+    for (int j = 0; j < MONTHS_BY_YEAR; j++) {
+      fprintf(outputFile, "\tMes");
+      if (j < 9) {
+        fprintf(outputFile, " 0%d: ", j+1);
+      }
+      else {
+        fprintf(outputFile, " %d: ", j+1);
+      }
+
+      int asteriskNumber = (int) ((maxAsterisks * techs[i].years[0].months[j].dataValue) / max2021);
+
+      for (int k = 0; k < asteriskNumber; k++) {
+        fprintf(outputFile, "*");
+      }
+
+      fprintf(outputFile, " %lf\n", techs[i].years[0].months[j].dataValue);
+    }
+  }
+
+  fprintf(outputFile, "\n\n\n\n\nAnio 2022\n\n");
+  for (int i = 0; i < ROWS_NUMBER; i++) {
+    fprintf(outputFile, "%s\n", techs[i].name);
+    for (int j = 0; j < MONTHS_BY_YEAR; j++) {
+      fprintf(outputFile, "\tMes");
+      if (j < 9) {
+        fprintf(outputFile, " 0%d: ", j+1);
+      }
+      else {
+        fprintf(outputFile, " %d: ", j+1);
+      }
+
+      int asteriskNumber = (int) ((maxAsterisks * techs[i].years[0].months[j].dataValue) / max2022);
+
+      for (int k = 0; k < asteriskNumber; k++) {
+        fprintf(outputFile, "*");
+      }
+
+      fprintf(outputFile, " %lf\n", techs[i].years[1].months[j].dataValue);
+    }
+  }
+
+  fclose(outputFile);
+  printf("Graficos por tecnologia y anio volcadas al archivo %s\n", fileName);
+}
+
+  return 0;
+}
+
