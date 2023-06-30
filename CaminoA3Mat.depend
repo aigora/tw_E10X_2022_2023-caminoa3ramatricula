@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1685035370 source:c:\users\david\github\tw_e10x_2022_2023-caminoa3ramatricula\caminoa3mat.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
