@@ -59,3 +59,82 @@ void readCsvFileToTechnologiesArray(Technology techs[ROWS_NUMBER]) {
 
   fclose(csvFile);
 }
+
+
+
+void calculateStatisticsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName) {
+  FILE* outputFile = fopen(fileName, "w");
+  if (outputFile == NULL) {
+    perror("Error abriendo fichero de salida\n");
+    exit(EXIT_FAILURE);
+  }
+
+  fprintf(outputFile, "Estadisticas por tecnologia:\n\n");
+
+  for (int i = 0; i < ROWS_NUMBER; i++) {
+    fprintf(outputFile, "Tecnologia: %s\n", techs[i].name);
+
+    for (int j = 0; j < YEARS_NUMBER; j++) {
+      fprintf(outputFile, "\tAnio %d:\n", techs[i].years[j].yearNumber);
+
+      double data[MONTHS_BY_YEAR];
+
+      // almacena los atos por año
+      for (int k = 0; k < MONTHS_BY_YEAR; k++) {
+        data[k] = techs[i].years[j].months[k].dataValue;
+      }
+
+      // calcula estdísticas por año
+      int n = MONTHS_BY_YEAR;
+      double sum = 0.0;
+      double min = data[0];
+      double max = data[0];
+
+      for (int k = 0; k < n; k++) {
+        sum += data[k];
+
+        if (data[k] < min) {
+          min = data[k];
+        }
+
+        if (data[k] > max) {
+          max = data[k];
+        }
+      }
+
+      double mean = sum / n;
+
+      // clasifica los datos en orden ascendente
+      for (int k = 0; k < n - 1; k++) {
+        for (int l = 0; l < n - k - 1; l++) {
+          if (data[l] > data[l + 1]) {
+            double temp = data[l];
+            data[l] = data[l + 1];
+            data[l + 1] = temp;
+          }
+        }
+      }
+
+      double median;
+      if (n % 2 == 0) {
+        median = (data[n / 2 - 1] + data[n / 2]) / 2.0;
+      } else {
+        median = data[n / 2];
+      }
+
+      double total = sum;
+
+      fprintf(outputFile, "\t\tMedia: %.2lf\n", mean);
+      fprintf(outputFile, "\t\tMediana: %.2lf\n", median);
+      fprintf(outputFile, "\t\tMinimo: %.2lf\n", min);
+      fprintf(outputFile, "\t\tMaximo: %.2lf\n", max);
+      fprintf(outputFile, "\t\tTotal: %.2lf\n", total);
+      fprintf(outputFile, "\n");
+    }
+
+    fprintf(outputFile, "\n");
+  }
+
+  fclose(outputFile);
+  printf("Estadisticas por tecnologia volcadas al archivo %s\n", fileName);
+}

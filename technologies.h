@@ -9,5 +9,6 @@ typedef struct {
 } Technology;
 
 void readCsvFileToTechnologiesArray(Technology techs[ROWS_NUMBER]);
+void calculateStatisticsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName);
 
 
