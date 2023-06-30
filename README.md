@@ -4,7 +4,7 @@ Vamos a realizar un programa en C que trabaje sobre un fichero . csv y analice s
 
 ## Integrantes del equipo
 
-- David Marrón Gutiérrez, DavidMG10. Realizará la lectura del fichero y las gráficas de datos.
+- David Marrón Gutiérrez, DavidMG10. Realizará la lectura del fichero, el mení y el logo.
 - Claudia Garcia Borrego, claudiagarciab. Ordenará los datos en función de distintas opciones.
 - Hugo Garcia Redondo, hugoogr. Realizará un cuestionario modo kahoot.
 - Lucas Domínguez González, LucasDG0. Realizará la busqueda de datos sobre el fichero.
