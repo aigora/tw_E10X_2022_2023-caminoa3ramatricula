@@ -60,6 +60,42 @@ void readCsvFileToTechnologiesArray(Technology techs[ROWS_NUMBER]) {
   fclose(csvFile);
 }
 
+void searchAndPrintToFileTechnologyData(Technology techs[ROWS_NUMBER], char* technologyName, char* fileName) {
+  FILE* outputFile = fopen(fileName, "w");
+  if (outputFile == NULL) {
+    perror("Error abriendo fichero de salida\n");
+    exit(EXIT_FAILURE);
+  }
+
+  fprintf(outputFile, "Resultado para la busqueda %s\n", technologyName);
+
+  int found = -1;
+  for (int i = 0; i < ROWS_NUMBER && found == -1; i++) {
+    if (strcasecmp(techs[i].name, technologyName) == 0) {
+      fprintf(outputFile, "Tecnologia: %s\n", techs[i].name);
+      for (int j = 0; j < YEARS_NUMBER; j++) {
+        fprintf(outputFile, "\tAnio %d:\n", techs[i].years[j].yearNumber);
+        for (int k = 0; k < MONTHS_BY_YEAR; k++) {
+          fprintf(outputFile,
+            "\t\tMes %d: %.2lf\n",
+            techs[i].years[j].months[k].monthNumber,
+            techs[i].years[j].months[k].dataValue
+          );
+        }
+      }
+
+      found = i;
+    }
+  }
+
+  if (found == -1) {
+    fprintf(outputFile, "Tecnologia no encontrada\n");
+  }
+
+  fclose(outputFile);
+  printf("Resultados de la busqueda %s, volcados al fichero resultado_busqueda.txt\n", technologyName);
+}
+
 void calculateStatisticsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName) {
   FILE* outputFile = fopen(fileName, "w");
   if (outputFile == NULL) {
@@ -216,6 +252,7 @@ void graphicsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName) {
   printf("Graficos por tecnologia y anio volcadas al archivo %s\n", fileName);
 }
 
-  return 0;
-}
+
+
+
 

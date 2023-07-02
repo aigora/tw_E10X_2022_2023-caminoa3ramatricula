@@ -20,6 +20,7 @@ typedef struct {
 } Technology;
 
 void readCsvFileToTechnologiesArray(Technology techs[ROWS_NUMBER]);
+void searchAndPrintToFileTechnologyData(Technology techs[ROWS_NUMBER], char* technologyName, char* fileName);
 void calculateStatisticsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName);
 void graphicsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName);
 
