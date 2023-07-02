@@ -252,7 +252,61 @@ void graphicsAndPrintToFile(Technology techs[ROWS_NUMBER], char* fileName) {
   printf("Graficos por tecnologia y anio volcadas al archivo %s\n", fileName);
 }
 
+void menu(Technology techs[ROWS_NUMBER]) {
+  char userInput[256];
+  int pickedOption = -1;
+  while (pickedOption != OPTION_EXIT_NUMBER) {
+    printf("\n\n\n\n\n");
+    printf("#############################################\n");
+    printf("#                 MENU                      #\n");
+    printf("#############################################\n");
+    printf("#                                           #\n");
+    printf("# 1 - Busqueda por nombre de tecnologia     #\n");
+    printf("# 2 - Estadisticas por tecnologia           #\n");
+    printf("# 3 - Graficos por anio,mes,tecnologia      #\n");
+    printf("# 4 - Salir                                 #\n");
+    printf("#                                           #\n");
+    printf("#############################################\n\n");
+
+    printf("Escoge una opcion del menu [1-4]: ");
+
+    fgets(userInput, 256, stdin);
+    pickedOption = atoi(userInput); // si no se escribe ningún número y devuelve return 0
+
+    if (pickedOption == 1) {
+      char techUserInput[100];
+      printf("Introduce el nombre de la tecnología a buscar:\n");
+      printf("Da igual en mayusculas o minusculas, pero debe ser un nombre de tecnologia que aparezca en el csv: ");
+      fgets(techUserInput, 100, stdin);
+      // fgets mantiene \n
+      // eliminamos \n poniendo \0 en el ultimo caracter.
+      techUserInput[strlen(techUserInput) - 1] = '\0';
+      searchAndPrintToFileTechnologyData(techs, techUserInput, "resultado_busqueda.txt");
+    }
+    else if (pickedOption == 2) {
+      calculateStatisticsAndPrintToFile(techs, "estadisticas.txt");
+    }
+    else if (pickedOption == 3) {
+      graphicsAndPrintToFile(techs, "graficos_por_anio.txt");
+    }
+    else if (pickedOption == 4) {
+      printf("Has escogido SALIR. Gracias por usar el programa, vuelva pronto\n");
+    }
+    else {
+      printf("Opcion no contemplada. Vuelva a intentarlo.\n");
+    }
+  }
+}
 
 
+int main(int argc, char *argv[]) {
 
+  Technology technologies[ROWS_NUMBER];
+  // lee el fichero csv
+  readCsvFileToTechnologiesArray(technologies);
+
+  // menu infinito
+  menu(technologies);
+  return 0;
+}
 
